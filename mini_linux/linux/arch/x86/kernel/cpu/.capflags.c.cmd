@@ -1,0 +1,1 @@
+cmd_arch/x86/kernel/cpu/capflags.c := /bin/bash /home/ajay/linux_4x_BusyBox/linux-4.10.6/arch/x86/kernel/cpu/mkcapflags.sh /home/ajay/linux_4x_BusyBox/linux-4.10.6/arch/x86/kernel/cpu/../../include/asm/cpufeatures.h arch/x86/kernel/cpu/capflags.c

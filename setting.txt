@@ -1,0 +1,20 @@
+OPT=$(pwd)
+BUILDS=$OPT/mini_linux
+LINUX=$OPT/linux
+LINUX_BUILD=$BUILDS/linux
+BUSYBOX=$OPT/busybox
+BUSYBOX_BUILD=$BUILDS/busybox
+INITRAMFS_BUILD=$BUILDS/initramfs
+cd $LINUX_BUILD
+#time make -j8
+cd $BUSYBOX_BUILD
+#time make -j8
+cd $INITRAMFS_BUILD
+mkdir -p bin sbin etc proc sys usr/bin usr/sbin
+cp -a $BUSYBOX_BUILD/_install/* 
+chmod +x init
+find . -print0 | cpio --null -ov --format=newc | gzip -9 > $BUILDS/initramfs.cpio.gz
+qemu-system-x86_64 -kernel $LINUX_BUILD/arch/x86_64/boot/bzImage -initrd $BUILDS/initramfs.cpio.gz -nographic -append "console=ttyS0"
+(<CTRL>a x to quit)
+
+https://gist.github.com/chrisdone/02e165a0004be33734ac2334f215380e
